@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type='text/xsl' href='rfc2629.xslt' ?>
+<?rfc toc="yes"?>
+<?rfc symrefs="yes"?>
+<?rfc sortrefs="yes"?>
+<?rfc compact="yes"?>
+<?rfc comments="yes"?>
+<?rfc inline="yes"?>
+<?rfc linkmailto="no" ?>
+<?rfc rfcedstyle="yes"?>
+<?rfc-ext allow-markup-in-artwork="yes" ?>
+<?rfc-ext include-references-in-index="yes" ?>
+
+<!DOCTYPE rfc []>
+
+<!-- Notes for Paul and Tony
+
+Have a section that is just examples of what is new in v3 (such as new table features)
+	Want to add examples of <blockquote>
+		Example of a cite for a reference that is already in the spec.
+	In the v3-only examples, use "ascii" attributes liberally
+
+-->
+
+<rfc
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  category="std"
+  docName="draft-wang-ipsecme-hybrid-kem-ikev2-frodo-03"
+  ipr="trust200902"
+  obsoletes=""
+  updates=""
+  submissionType="IETF"
+  xml:lang="en"
+  >
+<!-- [REPLACE] 
+       * docName with name of your draft
+     [CHECK] 
+       * category should be one of std, bcp, info, exp, historic
+       * ipr should be one of trust200902, noModificationTrust200902, noDerivativesTrust200902, pre5378Trust200902
+       * updates can be an RFC number as NNNN
+       * obsoletes can be an RFC number as NNNN 
+       * obsoletes can be an RFC number as NNNN 
+-->
+
+<front>
+<title abbrev="Hybrid KEM in the IKEv2">Post-quantum Hybrid Key Exchange in IKEv2 with FrodoKEM</title>
+<!--  [REPLACE/DELETE] abbrev. The abbreviated title is required if the full title is longer than 39 characters -->
+
+<seriesInfo name="Internet-Draft" value="draft-wang-ipsecme-hybrid-kem-ikev2-frodo-03"/>
+   
+    <author fullname="Guilin Wang" initials="G." role="editor" surname="Wang">
+      <!-- [CHECK]
+             * initials should not include an initial for the surname
+             * role="editor" is optional -->
+    <!-- Can have more than one author -->
+      
+    <!-- all of the following elements are optional -->
+      <organization>Huawei Int. Pte Ltd</organization>
+      <address>
+        <postal>
+          <!-- Reorder these if your country does things differently -->
+          <street>9 North Buona Vista Drive, #13-01</street>
+		  <street> The Metropolis Tower 1</street>
+          <city>Singapore</city>
+          <code>138588</code>
+          <country>Singapore</country>
+          <!-- Uses two letter country code -->
+        </postal>        
+        <email>wang.guilin@huawei.com</email>  
+      </address>
+    </author>
+	
+	<author fullname="Leonie Bruckert" initials="L." surname="Bruckert">
+		   
+     <organization> secunet Security Networks </organization>
+     <address>
+	    <postal>
+          <street>Ammonstr. 74</street>
+          <city>Dresden</city>
+          <code>01067</code>
+          <country>Germany</country>
+        </postal>   
+       <email>Leonie.Bruckert@secunet.com</email>
+     </address>
+	 
+   </author>
+	
+	<author fullname="Valery Smyslov" initials="V."  surname="Smyslov">
+     <organization> ELVIS-PLUS </organization>
+     <address>
+     <postal>
+          <country>Russian Federation</country>
+        </postal>   
+       <email> svan@elvis.ru </email>
+     </address>
+   </author>
+
+<date/>
+<!-- On draft subbmission:
+         * If only the current year is specified, the current day and month will be used.
+         * If the month and year are both specified and are the current ones, the current day will
+           be used
+         * If the year is not the current one, it is necessary to specify at least a month and day="1" will be used.
+    -->
+	
+<area>General</area>
+    <workgroup> IP Security Maintenance and Extensions </workgroup>
+	<!-- "Internet Engineering Task Force" is fine for individual submissions.  If this element is 
+          not present, the default is "Network Working Group", which is used by the RFC Editor as 
+          a nod to the history of the RFC Series. -->
+
+    <keyword>keyword</keyword>
+    <!-- [REPLACE/DELETE]. Multiple allowed.  Keywords are incorporated into HTML output files for 
+         use by search engines. -->
+
+<abstract>
+      <!-- RFC 9370 specifies a framework that supports mulitple key encapsulation mechanisms (KEMs) in the Internet Key Exchange Protocol Version 2 (IKEv2) by allowing up to 7 layers of additiona KEMs employed with the oringal ECDH to derive the final shared secret keys for IPsec protocols. The primitive goal is to mitigate the security threat against quantum computers by hybriding additional post-quantum (PQ) KEMs with the orinigal ECDH key exchange. This draft specifies how one QP KEMs, FrodoKEM, is instantiated in the IKEv2 as the additional KEMs with the main ECDH to achieve hybrid key agreement.-->
+	  
+	 <!-- <t> Multiple key exchanges in the Internet Key Exchange Protocol Version 2 (IKEv2) [RFC9370] specifies a framework, which supports multiple key encapsulation mechanisms (KEMs) in IKEv2 by allowing up to 7 layers of additional KEMs to derive the final shared secret keys for IPsec protocols. The primary goal is to mitigate the “harvest now and decrypt later” threat posed by Cryptographically Relevant Quantum Computers(CRQCs). For this purpose, one or more post-quantum KEMs are usually performed in addition to the traditional (EC)DH key exchange. This draft specifies how the post-quantum KEM algorithm FrodoKEM is instantiated for IKEv2 as an additional key exchange mechanism. -->
+
+    <t> FrodoKEM is an unstructured lattice based Key Encapsulation Mechanism (KEM). Compared to ML-KEM, 
+    FrodoKEM is considered as having more conservative design.
+    This draft specifies how to use FrodoKEM by itself or as an additional key
+    exchange in IKEv2 along with a traditional key exchange.  These
+    options allow for negotiating IKE and Child SA keys which are safe
+    against a Cryptographically Relevant Quantum Computers (CRQC).
+	</t>
+
+<!--	  <t> [EDNOTE: IANA KE code points for FrodoKEM may need to be assigned, as the code points for ML-KEM has been considered in <xref target="W-D.K25"> </xref>. ] </t> -->
+    </abstract>
+
+<!-- <note title="Editorial Note (To be removed by RFC Editor)">
+<t> Discussion of this draft takes place on the rfc-interest mailing list (rfc-interest@rfc-editor.org), which has its home page at
+<eref target="https://www.rfc-editor.org/mailman/listinfo/rfc-interest"/>. </t>
+</note> -->
+
+</front>
+
+<middle>
+
+<!--
+<t> To mitigate the security threats on key exchanges again quantum computers, especialy the “harvest now and decrypt later” (HNDL) attack, the approach of hybrid key encapsulation mechanisms (KEMs) has been proposed to achieve secure key exchange if at least one of KEMs is still secure. In particular, hybrid KEMs is supposed to be used in the scenarios where one or multiple traditional KEMs are used together with one or multiple post-quantum KEMs <xref target="RFC9794"></xref>. The Internet Key Exchange Protocol Version 2 (IKEv2), which sepecifies the key exchange procedures of IPSec, has to be updated for quantum resistant security. For this purpose, RFC 9370 <xref target="RFC9370"></xref> describes a framework to hybrid mulitple key encapsulation mechanisms (KEMs), which extends the IKEv2 by allowing multiple key exchanges to take place for deriving shared secret keys during a Security Association (SA) setup. Essentially, this speficiation employs the IKE_INTERMEDIATE exchange, which is a new IKE message introduced in <xref target="RFC9242"></xref> so that multiple key exchanges can be run to establish an IKE SA via exchanging additional PQ public keys and ciphertexts between a client and a server. RFC 9370 also introduces  IKE_FOLLOWUP_KE, a new IKEv2 exchange for realizing the same purpose when the IKE SA is being rekeyed or is creating additional Child SAs.</t> -->
+
+<section title="Notes of Change">
+
+<t> Changes made in version 03: </t>
+<ul spacing="normal">
+        <li> This specification has switched 4 variants of eFrodoKEM (ephemeral mode) to those of FrodoKEM (standard mode). The reasons are given in <xref target="Frodo"></xref>. </li>
+        <li> Other Sections are updated correspondingly. </li>
+        </ul>
+
+
+<t> Three main changes have been made in version 02, as a response to comments received since July of 2025. </t>
+
+<ul spacing="normal">
+        <li> Reduced code points from 6 in v01 to 4 now (revised Sections 3.3 and 6). </li>
+        <li> Explained why variants for both AES and SHAKE are necessary  (revised Section 3.2). </li>
+		<li> Added KEi and KEr payloads for using FrodoKEM in IKEv2 (added new Sections 4.3). </li>
+        </ul>
+
+<t> Two main changes have been made in version 01, as a response to comments received at 122 meeting: </t>
+
+<ul spacing="normal">
+        <li> Restructured the draft. </li>
+        <li> Reduced the point codes from 12 to 6 (eFrodoKEM). </li>
+        </ul>
+</section>
+
+<section title="Introduction">
+
+<t> Cryptographically-relevant quantum computers (CRQCs) pose a threat to cryptographically protected data. In particular, the so-called harvest-now-and-decrypt-later (HNDL) attack is considered an imminent threat. To mitigate this threat, the concept of hybrid key encapsulation mechanisms (KEMs) has been proposed to achieve secure key exchange if at least one of the KEMs is still secure <xref target="RFC9794" />. “Multiple key exchanges in the Internet Key Exchange Protocol Version 2 (IKEv2) <xref target="RFC9370"></xref> specifies a framework to perform hybrid key encapsulation in IKEv2 by allowing multiple key exchanges to take place for deriving shared secret keys during a Security Association (SA) setup. Essentially, this framework employs the IKE_INTERMEDIATE exchange, which is a new IKEv2 exchange introduced in “Intermediate Exchange in the Internet Key Exchange Protocol Version 2 (IKEv2)” <xref target="RFC9242"></xref>, so that multiple key exchanges can be run to establish an IKE SA<!-- via exchanging additional PQ public keys and ciphertexts between a client and a server-->. RFC 9370 also introduces IKE_FOLLOWUP_KE, a new IKEv2 exchange for realizing the same purpose when the IKE SA is being rekeyed or additional Child SAs are created. </t>
+
+        <!--<t> However, RFC 9370 just specifies the framework of hybrid KEMS but it has not been instantiated for concrete multiple KEMS. <xref target="W-D.K25"></xref> desribes how the framework given by RFC 9370 can be run with the post-quantum (PQ) ML-KEM <xref target="FIPS203"></xref>, previously called Kyber, which is the standard published by NIST in August of 2024. However, on the one hand, FRC 9350 allows up to 7 layers of additiona KEMs employed with the oringal ECDH to derive final shared secret keys for the IKEv2. On the other hand, for some applications (e.g. financial services) demanding high security level, additional PQ KEMs may be desired for completing the hybrid KEMs for the IKEv2. Currently, ISO is now standardizing three PQ KEM aglorithms: Kyber, FrodoKEM, and classic McElliece. Note that FrodoKEM <xref target="FrodoKEM"></xref> is unstructured lattice based KEM, whose security is more conservative compared to ML-KEM, which is based on structured lattice. Therefore, this draft is motivated to describe concretely how the frame of hybrid KEMs for the IKEv2 specified in RFC 9370 can be run via hybriding the ogirinal ECDH and FrodoKEM, even with ML-KEM together, if necessary. </t> -->
+		
+		<t> However, <xref target="RFC9370"></xref> just specifies the framework of hybrid KEMs and has to be been instantiated for concrete KEMs by separate documents. <xref target="W-D.K25"></xref> describes how the framework can be run with the ML-KEM <xref target="FIPS203"></xref>, previously called Kyber, which has been standardized by NIST in August 2024. However, <!--on the one hand, RFC 9370 allows up to 7 layers of additional KEMs to derive final shared secret keys in IKEv2. On the other hand, -->for some applications (e.g. financial services) demanding high security level, additional PQ KEMs may be desired for use with <xref target="RFC9370"></xref>. Currently, ISO is standardizing three PQ KEM algorithms (EDNOTE: we may want to change the wording since the ISO standard will be finished eventually): Kyber, FrodoKEM, and Classic McEliece. Note that FrodoKEM <xref target="FrodoKEM"></xref> <xref target="I-D.LBES25"></xref> is an unstructured lattice based KEM, whose security is more conservative compared to ML-KEM, which is based on structured lattice. <!-- Therefore, this specification is motivated to describe concretely how the framework of hybrid KEMs for IKEv2 specified in <xref target="RFC9370" /> can be instantiated with FrodoKEM. FrodoKEM should be used together with a traditional key exchange mechanism such as ECDH and in addition, may be used with other KEMs, e.g. ML-KEM. --> This specification is a profile of the Multiple Key Exchanges in IKEv2 specification <xref target="RFC9370" /> and registers new algorithm identifiers for FrodoKEM key exchanges in IKEv2.
+        </t>
+		
+        <t> While this document focuses on using FrodoKEM as an additional key exchange in a hybrid KEM scenario, in some scenarios it is possible to also use FrodoKEM as a quantum-resistant-only key exchange. Since the encapsulation key and ciphertext sizes for FrodoKEM parameters make UDP packet size larger than typical network MTUs, using FrodoKEM in the IKE_SA_INIT will most probably lead to IP fragmentation of these messages. However, when reliable transport is used for IKE (e.g. <xref target="RFC9329" />, <xref target="I-D.ietf-ipsecme-ikev2-reliable-transport" />) or IP fragmentation is not an issue, implementations <bcp14>MAY</bcp14> use FrodoKEM in the IKE_SA_INIT exchange.
+        </t>
+		
+		<t> Here are a few reasons for explaining why such diversity of KEMs is important for IKEv2 (and also other security protocols). </t>
+			<ul spacing="normal">
+         
+        <li> The availability of various PQ algorithms is beneficial to applications as different PQ algorithms could be selected according to practical performance and security requirements. </li>
+		
+        <li>Generally speaking, post-quantum algorithms are still not mature yet. Some algorithms may turn out to be insecure after a number of years’ study and/or standardization. An example is SIKE, which had been in the NIST standardization progress for several years until it was totally broken in July of 2022 <xref target="CD22"></xref>. </li>
+		
+		<li> Cryptographic agility shall play a crucial role in the PQ migration <xref target="OPM23"></xref>. To facilitate cryptographic agility, not only should the systems and protocols be engineered agile but also there  should be a good number of standardized PQC algorithms available, which may be based on different hard problems.</li>
+		
+        </ul>
+	  
+	  	<t> However, the performance of FrodoKEM is not as good as ML-KEM. In particular, the sizes of pulic key and ciphtertext of FrodoKEM are roughly 13 times larger than those of ML-KEM. Consequently, this will almost unavoidably trigger IKE fragmentation. </t>
+		
+</section>
+
+<section>
+        <name>Requirements Language</name>
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL",
+          "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT
+          RECOMMENDED", "MAY", and "OPTIONAL" in this document are to be
+          interpreted as described in BCP 14 <xref target="RFC2119"/>
+          <xref target="RFC8174"/> when, and only when, they appear in
+          all capitals, as shown here.</t>
+    </section>
+      <!-- [CHECK] The 'Requirements Language' section is optional -->
+	  
+<section>  <name> KEMs and FrodoKEM</name>
+    
+	<section>  <name> KEMs </name> 
+	
+	<t> Key encapsulation mechanism (KEM) is a kind of key exchange, which allows one entity to encapsulate a secret key under a (long-term or ephemeral) public key of another entity. By following the definiton given in <xref target="W-D.K25"></xref>, a KEM consists of three algorithms:
+    </t>
+	<ul spacing="normal">
+        <li>KeyGen(k) -> (pk, sk): A probabilistic key generation algorithm, which generates a public encapsulation key pk and a secret decapsulation key sk, when a security parameter k is given.</li>
+        <li>Encaps(pk) -> (ct, ss): A probabilistic encapsulation algorithm, which takes as input a public encapsulation key pk and outputs a ciphertext ct and a shared secret ss. </li>
+        <li> Decaps(sk, ct) -> ss: A decapsulation algorithm, which takes as input a secret decapsulation key sk and ciphertext ct and
+      outputs a shared secret ss.</li>
+      </ul>
+	  
+	  </section>
+	  
+	  <section title=" FrodoKEM" anchor="Frodo">
+	  
+	  <t> FrodoKEM <xref target="I-D.LBES25"></xref> is one of three KEMs in the process of ISO standardization <xref target="FrodoKEM"></xref>. Its security is based on a well-studied hard problem in unstructured lattices, called the learning with errors problem. The algorithm details of FrodoKEM are specified in <xref target="I-D.LBES25"></xref>. </t>
+	  
+	  
+	  <t> In total, FrodoKEM <xref target="FrodoKEM"></xref> has 12 variants. Namely, it offers 3 NIST security levels 1, 3, and 5; the pseudorandom generator (PRG) uses AES128 or SHAKE 128; and the KEM public key can be a long-term key (standard mode) or a short-term key (ephemeral mode). </t>
+	  
+	<!-- 
+	<t> FrodoKEM has two main variants: a "standard" variant and an "ephemeral" variant. As specified in Section of 8 in <xref target="I-D.LBES25"></xref>, "standard FrodoKEM is recommended for applications in which the number of ciphertexts produced for a single public key is expected to be equal or greater than 2^8". "Ephemeral FrodoKEM MUST be used for applications in which that same figure is expected to be smaller than 2^8". </t>
+	-->
+
+	<t> In this document, FrodoKEM, rather than eFrodoKEM, is specified for key exchange in IKEv2, based on the following three reasons. First of all, the performance difference between standard mode and ephemeral mode is negligible. Secondly, the recommendation of using FrodoKEM (Section 8 in <xref target="I-D.LBES25"></xref>) also allows to use FrodoKEM (standard mode) with ephemeral public keys. Finally, ephemeral public keys are expected for the key exchange in IKEv2, but it is not required in <xref target="RFC7296"></xref> that they never repeat. In fact, Section 2.12 in <xref target="RFC7296"></xref> describes the reason and several reasonable strategies for reuse of public keys (in the setting of Diffie-Hellman exponentials) in IKEv2, together with conditions and security implication. </t>
+	
+	<t> FrodoKEM has both AES and SHAKE variants to offer optimized performance across different hardware platforms. AES variants are highly suitable for devices with hardware acceleration for AES (like AES-NI on Intel processors). SHAKE variants provide competitive or better performance on platforms lacking AES hardware acceleration (such as many embedded systems and general-purpose CPUs). To cover both scenarios, this specification SHALL include both variants. </t >
+	
+	<t> According to the current standardization progress in ISO, FrodoKEM will be standardized for only 8 variants for NIST security levels 3 and 5. Namely, there are (e)FrodoKEM-976 and (e)FrodoKEM-1344, but not (e)FrodoKEM-640 for security level 1. To align with ISO, this specification specifies the use of FrodoKEM varaints for security levels 3 and 5 only, not variants for security level 1.</t>
+	
+	<t> Based on the above, this document specifies only four variants of FrodoKEM (standard mode) for IKEv2 key exchange. Namely, FrodoKEM-976-&lt;AES&gt; and FrodoKEM-976-&lt;SHAKE&gt; for security level 3, and FrodoKEM-1344-&lt;AES&gt; and FrodoKEM-1344-&lt;SHAKE&gt; for security level 5.</t>
+	
+	
+   
+   
+</section>
+
+<section title=" Comparison to ML-KEM" anchor="Comparison">
+
+<t> ML-KEM and FrodoKEM are two well-known post-quantum KEMs based on lattices. More specifically, ML-KEM <xref target="FIPS203"></xref>, originally called Kyber, has been standardized as the only one KEM scheme by NIST in August of 2024. It is a Module-Lattice based Key-Encapsulation Mechanism, so called ML-KEM. </t>
+
+<!-- ML-KEM is also specified as an Internet Draft in IETF <xref target="I-D.Kyber24"></xref>. -->
+	    
+<t> However, the performace of FrodoKEM is not as good as ML-KEM. Specifically, as shown in <xref target="table1" />, the sizes of public encapsulation key and ciphtertext of FrodoKEM (Table A.5 in <xref target="FrodoKEM"></xref>) are roughly 13 times larger than those of ML-KEM (Table 3 in <xref target="FIPS203"></xref>). Consequently, this will almost unavoidably trigger IKE fragmentation <xref target="RFC7383"></xref> <xref target="RFC9242"></xref>, when FrodoKEM is used in IKEv2. </t>
+
+          <table title="Size (in bytes) of keys and ciphertexts of ML-KEM and FrodoKEM" anchor="table1">
+            <thead>
+              <tr>
+                  <th>Algorithms</th>
+                  <th>decapsulation key sk</th>
+                  <th>encapsulation key pk</th>
+                  <th>ciphterext ct</th>
+                  <th>shared secret ss</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                  <th>ML-KEM-768</th>
+                  <th>2,400</th>
+                  <th>1,184</th>
+                  <th>1,088</th>
+                  <th>32</th>
+              </tr>
+              <tr>
+                  <th>ML-KEM-1024</th>
+                  <th>3,168</th>
+                  <th>1,568</th>
+                  <th>1,568</th>
+                  <th>32</th>
+              </tr>
+              <tr>
+                  <th>FrodoKEM-976</th>
+                  <th>31,296</th>
+                  <th>15,632</th>
+                  <th>15,792</th>
+                  <th>24</th>
+              </tr>
+              <tr>
+                  <th>FrodoKEM-1344</th>
+                  <th>43,088</th>
+                  <th>21,520</th>
+                  <th>21,696</th>
+                  <th>32</th>
+              </tr>
+            </tbody>
+          </table>
+
+</section>
+</section>
+
+<section title=" FrodoKEM in IKEv2" anchor="Main">
+
+<section title=" FrodoKEM in IKE_INTERMEDIATE" anchor="INTERMEDIATE">
+
+<t> As specified in <xref target="RFC9370"></xref>, to run PQ KEMs in IEKv2, the initiator and the responder SHALL run traditional key exchange first and then PQ KEMs. This is because the size of PQ KEM public key or the ciphertext is normally large, such that the first exchange in IKEv2 cannot accommodate them (together with other necessary information) without exceeding MTU (Maximum Transmission Unit), which is generally set as 1500 bytes. </t>
+
+<t> Namely, in the first IKE_SA_INIT exchanges in IKEv2, the initiator sends KEi(0) payload to the responder, and the responder sends KEr(0) payload to the initiator for completing traditional ephemeral DH or ephemeral ECDH key exhange. Once these procedures are done successully, the two entities SHALL share the same raw key SK(0). And from SK(0), a series of keying materials are derived, which are called as SKEYSEED(0), SK_d(0), SK_a[i/r](0), SK_e[i/r](0), and SK_p[i/r](0) (refere to section 2.2.2 in <xref target="RFC9370"></xref>). </t>
+
+<t> To run FrodoKEM (or any PQ KEM) in IKEv2, both the initiator and the responder MUST declare their support of both the ADDKE Transform Types and the IKE_INTERMEDIATE exchange in the IKE_SA_INIT exchanges between them. At the same time, the initiator SHALL present its intended FrodoKEM variants via one or more ADDKE Transform Types, which are presented in one or more Proposals. Then, the responder MAY select a variant of FrodoKEM (or more PQ KEMs) from the initiator's Proposals, and then sends the corresponding ADDKE Transform ID (or IDs) to the initiator. </t>
+
+<t> Once the initiator receives one ADDKE Transform ID, which is for FrodoKEM (or any PQ KEM), it SHALL run KeyGen(k) to generate an ephemeral public and private KEM key pairs (pk, sk), and sends the value of public key pk to the responder via KEi(1) payload. Corrrespondingly, once retrived public key pk from KEi(1) payload, the responder SHALL run Encaps(pk) to obtain a pair (ct1, ss1). Here, ss1 is the raw key to be shared, and ct1 is the ciphertext encapsulated ss1. Then, the responder SHALL send ct1 via KEr(1) payload that contains ct1 to the initiator. After that, the initiator can retrieve ct1 from KEr(1) payload and then decapsulate ct1 to obtain the shared sceret ss1. Here, both KEi(1) and KEr(1) payloads SHALL be sent via the IKE_INTERMEDIATE exchanges between the two entities. Also, note that during these procedures, KEi(1) and KEr(1) payloads SHALL be protected via using keys SK_a[i/r](0) and SK_e[i/r](0). </t>
+
+<t> Once ss1 is successfully shared, the two entities SHALL set SK(1)=ss1, and then stir SK(1) with SK_d(0) to derive SKEYSEED(1). And then, from SKEYSEED(1), a series of SK_d(1), SK_a[i/r](1), SK_e[i/r](1), and SK_p[i/r](1) SHALL be derived. If there are more ADDKE exchanges for PQ KEMs, these procedures SHALL continute until the final ADDKE finishes. Then, the final updated key values, SKEYSEED(n), SK_d(n), SK_a[i/r](n), SK_e[i/r](n), and SK_p[i/r](n), SHALL be used to protect the following IKEv2 exchanges, in particual the IKEv2 authentication messages. </t>
+
+<t> The structure of KEi(1) and KEr(1) payloads and their lengths for FrodoKEMs listed in <xref target="table1" /> will be given in <xref target="Payloads"></xref>. </t>
+
+<t> Following general exmaples given in Appendix A of <xref target="RFC9370"></xref>, here is an example to show that the initiator proposes to use additional key exchanges for establishing an IKE SA. Here, the initiator proposes three sets of additional key exchanges. Namely, the first set is TBD38 (FrodoKEM-976-&lt;AES&gt;), TBD39 (FrodoKEM-976-&lt;SHAKE&gt;) or NONE (refer to <xref target="iana.considerations"></xref>); the second set is 36 (ml-kem-768), 37 (ml-kem-1024) <xref target="W-D.K25"></xref> or NONE; and the third set is TBD41 (FrodoKEM-1344-&lt;SHAKE&gt;) or NONE (refer to <xref target="iana.considerations"></xref>). As all of the three additional key exchanges are optional, the responder can choose NONE for some or all of the additional exchanges if the proposed key exchange methods are not supported or for whatever reasons the responder decides not to perform the additional key exchange.</t>
+
+<figure title="Hybrid KEMs of ECDH, TBD38 (FrodoKEM-976-&lt;AES&gt;), and ml-kem-768" anchor="figure1">
+<artwork><![CDATA[
+Initiator                     Responder
+---------------------------------------------------------------------
+HDR(IKE_SA_INIT), SAi1(...ADDKE*...), --->
+KEi(Curve25519), Ni, N(IKEV2_FRAG_SUPPORTED),
+N(INTERMEDIATE_EXCHANGE_SUPPORTED)
+    Proposal #1
+    Transform ENCR (ID = ENCR_AES_GCM_16,
+                    256-bit key)
+    Transform PRF (ID = PRF_HMAC_SHA2_512)
+    Transform KE (ID = Curve25519)
+    Transform ADDKE1 (ID = TBD38)
+    Transform ADDKE1 (ID = TBD39)
+    Transform ADDKE1 (ID = NONE)
+    Transform ADDKE2 (ID = ml-kem-768)
+    Transform ADDKE2 (ID = ml-kem-1024)
+    Transform ADDKE2 (ID = NONE)
+    Transform ADDKE3 (ID = TBD41)
+    Transform ADDKE3 (ID = NONE)
+    
+                  <--- HDR(IKE_SA_INIT), SAr1(...ADDKE*...),
+                       KEr(Curve25519), Nr, N(IKEV2_FRAG_SUPPORTED),
+                       N(INTERMEDIATE_EXCHANGE_SUPPORTED)
+                       Proposal #1
+                         Transform ENCR (ID = ENCR_AES_GCM_16,
+                                        256-bit key)
+                         Transform PRF (ID = PRF_HMAC_SHA2_512)
+                         Transform KE (ID = Curve25519)
+                         Transform ADDKE1 (ID = TBD38)
+                         Transform ADDKE2 (ID = ml-kem-768)
+                         Transform ADDKE3 (ID = NONE)
+
+HDR(IKE_INTERMEDIATE), SK {KEi(1)(TBD38)} -->
+                  <--- HDR(IKE_INTERMEDIATE), SK {KEr(1)(TBD38)}
+HDR(IKE_INTERMEDIATE), SK {KEi(2)(ml-kem-768)} -->
+                  <--- HDR(IKE_INTERMEDIATE), SK {KEr(2)(ml-kem-768)}
+
+HDR(IKE_AUTH), SK{ IDi, AUTH, SAi2, TSi, TSr } --->
+                  <--- HDR(IKE_AUTH), SK{IDr, AUTH, SAr2,TSi, TSr}                         
+  
+]]></artwork> 
+</figure>
+
+<t> In the above example, the responder chooses to run two additional key exchanges. Namely, it selects TBD38 (FrodoKEM-976-&lt;AES&gt;), 36 (ml-kem-768), and NONE, respectively for the first, second, and third additional key exchanges. According to the IKEv2 specification <xref target="RFC7296"></xref>, a set of keying materials can be derived, in particular SK_d, SK_a[i/r], and SK_e[i/r], when the IKE_SA_INIT exchange has been completed by the initiator and the responder with a successful execution of ECDH based on the curve 25519. After that, both peers will perform an IKE_INTERMEDIATE exchange, carrying TBD38 payload, which is protected with SK_e[i/r] and SK_a[i/r] keys. After the completion of this IKE_INTERMEDIATE exchange, the SKEYSEED is updated using SK(1), which is the TBD38 shared secret. Next, an IKE_INTERMEDIATE exchange for 36 payload will be performed so that the SKEYSEED will be updated again. </t>
+
+
+<t> After the completion of both IKE_INTERMEDIATE exchanges for TBD38 and 36, the initiator and the responder will continue the IKE_AUTH exchange phase. </t>
+	</section>
+	
+<section title="FrodoKEM in IKE_FOLLOWUP_KE" anchor="IKE_FOLLOWUP_KE">
+
+<t> FrodoKEM can also be used for creating additional Child SAs and rekeying the IKE SA or Child SAs. FrodoKEM may be used as the only key exchange in CREATE_CHILD_SA exchange or as an additional key exchange method. In the latter case, the IKE_FOLLOWUP_KE exchange as defined in <xref target="RFC9370"></xref> is used. </t> 
+
+<t> IKE_FOLLOWUP_KE is an additional exchange for the purpose of using multiple key exchanges with the CREATE_CHILD_SA Exchange. If the use of additional key exchange methods is negotiated in the CREATE_CHILD_SA exchange, these are performed subsequently in a series of IKE_FOLLOWUP_KE exchanges. After all key exchanges are completed, SKEYSEED or KEYMAT are computed as specified in section 2.2.4 of <xref target="RFC9370"></xref>. </t> 
+</section>
+
+<section title="IKEv2 Payloads for FrodoKEM" anchor="Payloads">
+<t> For completeness, the KE (Key Exchange) payload is given below and all fields inside keep the same meaning as specified in Section 3.4 of the IKEv2 standard <xref target="RFC7296"></xref>. This also means that the initiator SHALL prepare KEi(0) and KEi(1) payloads according to <xref target="figure2" />. Namely, the Key Exchange Data will be filled with KEi(0) or KEi(1). This applies for the responder to prepare KEr(0) and KEr(1) as well. </t> 
+
+<figure title="Key Exchange Payload" anchor="figure2" >
+<artwork><![CDATA[
+                      1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+| Next Payload  |C|  RESERVED   |         Payload Length        |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|    Key Exchange Method Num    |           RESERVED            |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+|                                                               |
+~                       Key Exchange Data                       ~
+|                                                               |
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   ]]></artwork> 
+</figure>
+
+<t> <xref target="table2" /> lists the lengths in octets for the KE payload with four variants of FrodoKEM specified in this document. </t>
+
+<table title="Lengths of Key Payload for 4 variants of FrodoKEM" anchor="table2">
+  <thead>
+    <tr>
+        <th>KE Method No.</th>
+        <th>KEM</th>
+        <th>Payload Length (for pk/ct)</th>
+        <th>Data Size in octets (KEi/KEr)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <th>TBD38</th>
+        <th>FrodoKEM-976-&lt;AES&gt;</th>
+        <th>15,640/15,800</th>
+        <th>15,632/15,792</th>
+    </tr>
+    <tr>
+        <th>TBD39</th>
+        <th>FrodoKEM-976-&lt;SHAKE&gt;</th>
+        <th>15,640/15,800</th>
+        <th>15,632/15,792</th>
+    </tr>
+    <tr>
+        <th>TBD40</th>
+        <th>FrodoKEM-1344-&lt;AES&gt;</th>
+        <th>21,528/21,704</th>
+        <th>21,520/21,696</th>
+    </tr>
+    <tr>
+        <th>TBD41</th>
+        <th>FrodoKEM-1344-&lt;SHAKE&gt;</th>
+        <th>21,528/21,704</th>
+        <th>21,520/21,696</th>
+    </tr>
+  </tbody>
+</table>
+
+</section>
+
+</section>
+	
+<section title="Security Considerations" anchor="Security">
+
+<t> Basically, security considerations from <xref target="RFC7383"></xref>, <xref target="RFC9242"></xref> and <xref target="RFC9370"></xref> apply to hybrid KEM exchange of ECDH, ML-KEM, and FrodoKEM described in this draft. </t>
+
+<t> Downgrade attacks on the authentication part of IKEv2 has been identied and repaired in "Prevention Downgrade Attacks on the Internet Key Exchange Protocol Version 2 (IKEv2)" <xref target="W-D.SP25"></xref>. Due to a flaw without authenticating the whole message received from the other peer, these attacks may lead an attacker to misleading the two peers to finally negotiate a weak KEM for key exchange. These attacks apply to the IKEv2 <xref target="RFC7296"></xref>, <xref target="RFC9370"></xref>, and all extensions. So, this specification MUST be implemented with the updated mechanism for authentication given by <xref target="W-D.SP25"></xref>.</t>
+
+<!-- TO BE MOVED SOMEWHERE LATER
+<t> In addition, due to the fragmentation of public key and ciphertext of the IKE message when FrodoKEM is hybridized, the performance of the IKEv2 may be affected and the chance of re-transmission of IKE packet could become higher in some networking scenarios.</t> -->
+
+
+</section>
+	
+<section title="IANA Considerations" anchor="iana.considerations">
+	  
+    
+	<t> As specified in <xref target="Frodo"></xref>, this draft is to asking 4 values for registration in the "Transform Type 4 - Key Exchange Method Transform IDs" registry <xref target="IANA-IKEv2"></xref>, maintained by IANA. Namely, they are: "FrodoKEM-976-&lt;AES&gt;", "FrodoKEM-976-&lt;SHAKE&gt;", "FrodoKEM-1344-&lt;AES&gt;", and "FrodoKEM-1344-&lt;SHAKE&gt;".</t>
+
+<t> <xref target="table3" /> below gives the list of 4 IANA values for the 4 versions of FrodoKEM (sandard mode). The Recipient Tests field should point to this document as well.</t>
+	
+<table title="Updates to the IANA &quot;Transform Type 4 - Key Exchange Method Transform IDs&quot;" anchor="table3">
+  <thead>
+    <tr>
+        <th>Number</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Recipient Tests</th>
+        <th>Reference</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <th>TBD38</th>
+        <th>FrodoKEM-976-&lt;AES&gt;</th>
+        <th></th>
+        <th>[TBD, this draft]</th>
+        <th>[TBD, this draft]</th>
+    </tr>
+    <tr>
+        <th>TBD39</th>
+        <th>FrodoKEM-976-&lt;SHAKE&gt;</th>
+        <th></th>
+        <th>[TBD, this draft]</th>
+        <th>[TBD, this draft]</th>
+    </tr>
+    <tr>
+        <th>TBD40</th>
+        <th>FrodoKEM-1344-&lt;AES&gt;</th>
+        <th></th>
+        <th>[TBD, this draft]</th>
+        <th>[TBD, this draft]</th>
+    </tr>
+    <tr>
+        <th>TBD41</th>
+        <th>FrodoKEM-1344-&lt;SHAKE&gt;</th>
+        <th></th>
+        <th>[TBD, this draft]</th>
+        <th>[TBD, this draft]</th>
+    </tr>
+  </tbody>
+</table>
+	
+ </section>
+
+
+<section title="Acknowledgments" anchor="acknowledgements">
+
+<t>
+The authors would like to thank Scott Fluhrer, Christopher Patton, and Kev Kitchen for their valuable comments.  
+</t>
+</section>
+
+</middle>
+
+<back>
+  
+<references title="Normative References">
+
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8174.xml"/>
+		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7296.xml"/>
+		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7383.xml"/>
+		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9242.xml"/>
+		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9370.xml"/>
+		<reference anchor="IANA-IKEv2" target="https://www.iana.org/assignments/ikev2-parameters/ikev2-parameters.xhtml">
+          <front>
+            <title> Internet Key Exchange Version 2 (IKEv2) Parameters </title>
+            <author fullname=" " initials=" " surname=" "/>
+		 
+            <abstract>
+              <t> .. </t>
+            </abstract>
+          </front>
+          <seriesInfo name="the Internet Assigned Numbers Authority (IANA)." value=""/>
+        </reference>
+
+<reference anchor="FrodoKEM"  target="https://frodokem.org/files/FrodoKEM_standard_proposal_20241205.pdf">
+          <front>
+            <title>FrodoKEM: Learning With Errors Key Encapsulation</title>
+            <author fullname="E. Alkim" initials="E." surname="Alkim"/>
+            <author fullname="J. W. Bos" initials="J. W." surname="Bos"/>
+			<author fullname="L. Ducas" initials="L." surname="Ducas"/>
+			<author fullname="P. Longa" initials="P." surname="Longa"/>
+            <author fullname="I. Mironov" initials="I. " surname="Mironov"/>
+			<author fullname="M. Naehrig" initials="N." surname="Naehrig"/>
+			<author fullname="V. Nikolaenko" initials="V." surname="Nikolaenko"/>
+			<author fullname="C. Peikert" initials="C." surname="Peikert"/>
+			<author fullname="A. Raghunathan" initials="A." surname="Raghunathan"/>
+            <author fullname="D. Stebila" initials="D. " surname="Stebila"/>
+            <date month="December" year="2024"/>
+            <abstract>
+              <t> .. </t>
+            </abstract>
+          </front>
+          <seriesInfo name="Preliminary Standardization Proposal submitted to ISO" value=""/>
+        </reference>
+		
+        <!-- The recommended and simplest way to include a well known reference -->
+ 
+</references>
+
+<references>
+        <name>Informative References</name>
+		
+		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9794.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9329.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ipsecme-ikev2-reliable-transport.xml"/>
+		
+		<reference anchor="W-D.K25"  target="https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/">
+          <front>
+            <title>Post-quantum Hybrid Key Exchange with ML-KEM in the Internet Key Exchange Protocol Version 2 (IKEv2)</title>
+            <author fullname="P. Kampanakis" initials="K." surname="Kampanakis"/>
+            <date month="October" year="2025"/>
+            <abstract>
+              <t> .. </t>
+            </abstract>
+          </front>
+          <seriesInfo name="Work in Progress, " value="Internet-Draft (Group Documet of IPSECME, IETF)"/>
+        </reference>
+		
+<!--
+		<reference anchor="I-D.Kyber24"  target="https://datatracker.ietf.org/doc/draft-cfrg-schwabe-kyber/">
+          <front>
+            <title>Kyber Post-Quantum KEM </title>
+            <author fullname="Peter Schwabe" initials="P. " surname="Schwabe" />
+			<author fullname="Bas Westerbaan" initials="B. " surname="Westerbaan" />
+            <date month="January" year="2024"/>
+            <abstract>
+              <t> .. </t>
+            </abstract>
+          </front>
+          <seriesInfo name="Work in Progress, " value="Internet-Draft"/>
+        </reference>
+-->	
+	
+		<reference anchor="OPM23"  target="">
+          <front>
+            <title>Where Is the Research on Cryptographic Transition and Agility?</title>
+            <author fullname="D. Ott" initials="D." surname="Ott"/>
+            <author fullname="K. Paterson" initials="K." surname="Paterson"/>
+			<author fullname="D. Moreau" initials="D." surname="Moreau"/>
+            <date month="January" year="2023"/>
+            <abstract>
+              <t> .. </t>
+            </abstract>
+          </front>
+          <seriesInfo name="Communications of the ACM, " value="66(4): 29-32"/>
+        </reference>
+
+			  
+			  <reference anchor="I-D.LBES25"  target="https://datatracker.ietf.org/doc/draft-longa-cfrg-frodokem/">
+          <front>
+            <title>FrodoKEM: key encapsulation from learning with errors</title>
+            <author fullname="P. Longa" initials="P." surname="Longa"/>
+            <author fullname="J. W. Bos" initials="J. W." surname="Bos"/>
+			<author fullname="S. Ehlen" initials="S." surname="Ehlen"/>
+            <author fullname="D. Stebila" initials="D. " surname="Stebila"/>
+            <date month="september" year="2025"/>
+            <abstract>
+              <t> .. </t>
+            </abstract>
+          </front>
+          <seriesInfo name="Work in Progress, " value="WG Document"/>
+        </reference>
+		
+	<reference anchor="FIPS203"  target="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">
+          <front>
+            <title>FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism Standard </title>
+            <author fullname="National Institute of Standards and Technology" initials="" surname="National Institute of Standards and Technology" />
+            <date month="August" year="2024"/>
+            <abstract>
+              <t> .. </t>
+            </abstract>
+          </front>
+          <seriesInfo name="Federal Information Processing Standards Publication" value=""/>
+        </reference>
+
+	<reference anchor="CD22"  target="https://eprint.iacr.org/2022/975">
+          <front>
+            <title> An Efficient Key Recovery Attack on SIDH </title>
+            <author fullname="W. Castryck" initials="W." surname="Castryck"/>
+            <author fullname="T. Decru" initials="T." surname="Decru"/>
+            <date month="July" year="2022"/>
+            <abstract>
+              <t> .. </t>
+            </abstract>
+          </front>
+	         <seriesInfo name="Formal version published in the proceddings of EUROCRYPT 2023" value=""/>
+			 </reference>
+			 
+			 <reference anchor="W-D.SP25"  target="https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-downgrade-prevention/">
+          <front>
+            <title> Prevention Downgrade Attacks on the Internet Key Exchange Protocol Version 2 (IKEv2) </title>
+            <author fullname="V. Smyslov" initials="V. " surname="Smyslov" />
+			<author fullname="C. Patton" initials="C. " surname="Patton" />
+            <date month="November" year="2025"/>
+            <abstract>
+              <t> .. </t>
+            </abstract>
+          </front>
+          <seriesInfo name="Work in Progress, " value="Internet-Draft (Group Documet of IPSECME, IETF)"/>
+        </reference>
+			 
+      </references>
+    
+	
+
+</back>
+
+</rfc>
