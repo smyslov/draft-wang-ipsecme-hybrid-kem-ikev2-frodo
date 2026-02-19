@@ -25,7 +25,7 @@ Have a section that is just examples of what is new in v3 (such as new table fea
 <rfc
   xmlns:xi="http://www.w3.org/2001/XInclude"
   category="std"
-  docName="draft-wang-ipsecme-hybrid-kem-ikev2-frodo-03"
+  docName="draft-ietf-ipsecme-hybrid-kem-ikev2-frodo-04"
   ipr="trust200902"
   obsoletes=""
   updates=""
@@ -46,7 +46,7 @@ Have a section that is just examples of what is new in v3 (such as new table fea
 <title abbrev="Hybrid KEM in the IKEv2">Post-quantum Hybrid Key Exchange in IKEv2 with FrodoKEM</title>
 <!--  [REPLACE/DELETE] abbrev. The abbreviated title is required if the full title is longer than 39 characters -->
 
-<seriesInfo name="Internet-Draft" value="draft-wang-ipsecme-hybrid-kem-ikev2-frodo-03"/>
+<!-- <seriesInfo name="Internet-Draft" value="draft-wang-ipsecme-hybrid-kem-ikev2-frodo-03"/> -->
    
     <author fullname="Guilin Wang" initials="G." role="editor" surname="Wang">
       <!-- [CHECK]
@@ -71,7 +71,6 @@ Have a section that is just examples of what is new in v3 (such as new table fea
     </author>
 	
 	<author fullname="Leonie Bruckert" initials="L." surname="Bruckert">
-		   
      <organization> secunet Security Networks </organization>
      <address>
 	    <postal>
@@ -82,18 +81,32 @@ Have a section that is just examples of what is new in v3 (such as new table fea
         </postal>   
        <email>Leonie.Bruckert@secunet.com</email>
      </address>
-	 
    </author>
 	
 	<author fullname="Valery Smyslov" initials="V."  surname="Smyslov">
      <organization> ELVIS-PLUS </organization>
-     <address>
-     <postal>
-          <country>Russian Federation</country>
-        </postal>   
-       <email> svan@elvis.ru </email>
-     </address>
+    <address>
+        <postal>
+            <street>PO Box 81</street>
+            <city>Moscow (Zelenograd)</city>
+            <code>124460</code>
+            <country>RU</country>
+        </postal>
+        <phone>+7 495 276 0211</phone>
+        <email>svan@elvis.ru</email>
+    </address>
    </author>
+
+    <author initials="M." surname="Chen" fullname="Meiling Chen">
+      <organization>China Mobile</organization>
+      <address>
+        <postal>
+          <city>BeiJing</city>
+          <country>China</country>
+        </postal>
+        <email>chenmeiling@chinamobile.com</email>
+      </address>
+    </author>
 
 <date/>
 <!-- On draft subbmission:
@@ -142,6 +155,15 @@ Have a section that is just examples of what is new in v3 (such as new table fea
 <t> To mitigate the security threats on key exchanges again quantum computers, especialy the “harvest now and decrypt later” (HNDL) attack, the approach of hybrid key encapsulation mechanisms (KEMs) has been proposed to achieve secure key exchange if at least one of KEMs is still secure. In particular, hybrid KEMs is supposed to be used in the scenarios where one or multiple traditional KEMs are used together with one or multiple post-quantum KEMs <xref target="RFC9794"></xref>. The Internet Key Exchange Protocol Version 2 (IKEv2), which sepecifies the key exchange procedures of IPSec, has to be updated for quantum resistant security. For this purpose, RFC 9370 <xref target="RFC9370"></xref> describes a framework to hybrid mulitple key encapsulation mechanisms (KEMs), which extends the IKEv2 by allowing multiple key exchanges to take place for deriving shared secret keys during a Security Association (SA) setup. Essentially, this speficiation employs the IKE_INTERMEDIATE exchange, which is a new IKE message introduced in <xref target="RFC9242"></xref> so that multiple key exchanges can be run to establish an IKE SA via exchanging additional PQ public keys and ciphertexts between a client and a server. RFC 9370 also introduces  IKE_FOLLOWUP_KE, a new IKEv2 exchange for realizing the same purpose when the IKE SA is being rekeyed or is creating additional Child SAs.</t> -->
 
 <section title="Notes of Change">
+
+<t> Changes made in version 04: </t>
+<ul spacing="normal">
+        <li> New co-author is added.</li>
+        <li> Clarifications are added that FrodoKEM can be used either as an additional key exchange method, or as the only key exchange method for IKE SA 
+        (provided there is no transport issues). </li>
+        <li> References are re-arranged.</li>
+        <li> Minor changes throughout the document.</li>
+        </ul>
 
 <t> Changes made in version 03: </t>
 <ul spacing="normal">
