@@ -241,20 +241,25 @@ Have a section that is just examples of what is new in v3 (such as new table fea
 	  
 	  <section title=" FrodoKEM" anchor="Frodo">
 	  
-	  <t> FrodoKEM <xref target="I-D.LBES25"></xref> is one of three KEMs in the process of ISO standardization <xref target="FrodoKEM"></xref>. Its security is based on a well-studied hard problem in unstructured lattices, called the learning with errors problem. The algorithm details of FrodoKEM are specified in <xref target="I-D.LBES25"></xref>. </t>
+	  <t> 
+	 <!-- FrodoKEM <xref target="I-D.LBES25"></xref> is one of three KEMs in the process of ISO standardization <xref target="FrodoKEM"></xref>. -->
+		  The security of FrodoKEM is based on a well-studied hard problem in unstructured lattices, called the learning with errors (LWE) problem. The algorithm details of FrodoKEM are specified in <xref target="I-D.LBES25"></xref> and <xref target="FrodoKEM"></xref> . </t>
 	  
 	  
-	  <t> In total, FrodoKEM <xref target="FrodoKEM"></xref> has 12 variants. Namely, it offers 3 NIST security levels 1, 3, and 5; the pseudorandom generator (PRG) uses AES128 or SHAKE 128; and the KEM public key can be a long-term key (standard mode) or a short-term key (ephemeral mode). </t>
+	  <t> FrodoKEM <xref target="FrodoKEM"></xref> has 12 variants. It offers 3 NIST security levels 1, 3, and 5; its pseudorandom generator (PRG) is AES128 or SHAKE 128; and its KEM public key can be a long-term  (standard mode) or a short-term ones (ephemeral mode). </t>
 	  
 	<!-- 
 	<t> FrodoKEM has two main variants: a "standard" variant and an "ephemeral" variant. As specified in Section of 8 in <xref target="I-D.LBES25"></xref>, "standard FrodoKEM is recommended for applications in which the number of ciphertexts produced for a single public key is expected to be equal or greater than 2^8". "Ephemeral FrodoKEM MUST be used for applications in which that same figure is expected to be smaller than 2^8". </t>
 	-->
 
-	<t> In this document, FrodoKEM, rather than eFrodoKEM, is specified for key exchange in IKEv2, based on the following three reasons. First of all, the performance difference between standard mode and ephemeral mode is negligible. Secondly, the recommendation of using FrodoKEM (Section 8 in <xref target="I-D.LBES25"></xref>) also allows to use FrodoKEM (standard mode) with ephemeral public keys. Finally, ephemeral public keys are expected for the key exchange in IKEv2, but it is not required in <xref target="RFC7296"></xref> that they never repeat. In fact, Section 2.12 in <xref target="RFC7296"></xref> describes the reason and several reasonable strategies for reuse of public keys (in the setting of Diffie-Hellman exponentials) in IKEv2, together with conditions and security implication. </t>
+	<t> In this document, FrodoKEM, rather than eFrodoKEM, is specified for key exchange in IKEv2, based on the following three reasons. First of all, the performance difference between standard mode and ephemeral mode is negligible. 
+		<!-- Secondly, the recommendation of using FrodoKEM (Section 8 in <xref target="I-D.LBES25"></xref>) also allows to use FrodoKEM (standard mode) with ephemeral public keys. -->
+		Secondly, FrodoKEM (standard mode) has no restriction on the reuse of a public key (Section 8 in <xref target="I-D.LBES25"></xref>). 
+		Finally, ephemeral public keys are expected for the key exchange in IKEv2, but it is not required in <xref target="RFC7296"></xref> that they never repeat. In fact, Section 2.12 in <xref target="RFC7296"></xref> describes the reason and several reasonable strategies for reuse of public keys (in the setting of Diffie-Hellman exponentials) in IKEv2, together with conditions and security implication. </t>
 	
-	<t> FrodoKEM has both AES and SHAKE variants to offer optimized performance across different hardware platforms. AES variants are highly suitable for devices with hardware acceleration for AES (like AES-NI on Intel processors). SHAKE variants provide competitive or better performance on platforms lacking AES hardware acceleration (such as many embedded systems and general-purpose CPUs). To cover both scenarios, this specification SHALL include both variants. </t >
+	<t> FrodoKEM has both AES and SHAKE variants to offer optimized performance across different hardware platforms. AES variants are highly suitable for devices with hardware acceleration for AES (like AES-NI on Intel processors). SHAKE variants provide competitive or better performance on platforms lacking AES hardware acceleration (such as many embedded systems and general-purpose CPUs). To cover both scenarios, this specification include both variants. </t >
 	
-	<t> According to the current standardization progress in ISO, FrodoKEM will be standardized for only 8 variants for NIST security levels 3 and 5. Namely, there are (e)FrodoKEM-976 and (e)FrodoKEM-1344, but not (e)FrodoKEM-640 for security level 1. To align with ISO, this specification specifies the use of FrodoKEM varaints for security levels 3 and 5 only, not variants for security level 1.</t>
+	<t> According to the current standardization progress in ISO, FrodoKEM will be standardized for the eight variants for NIST security levels 3 and 5. Namely, they are (e)FrodoKEM-976 and (e)FrodoKEM-1344, but not (e)FrodoKEM-640 for security level 1. To align with ISO, this document specifies the use of FrodoKEM varaints for security levels 3 and 5 only, not variants for security level 1.</t>
 	
 	<t> Based on the above, this document specifies only four variants of FrodoKEM (standard mode) for IKEv2 key exchange. Namely, FrodoKEM-976-&lt;AES&gt; and FrodoKEM-976-&lt;SHAKE&gt; for security level 3, and FrodoKEM-1344-&lt;AES&gt; and FrodoKEM-1344-&lt;SHAKE&gt; for security level 5.</t>
 	
