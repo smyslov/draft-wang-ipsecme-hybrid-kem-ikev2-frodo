@@ -270,11 +270,12 @@ Have a section that is just examples of what is new in v3 (such as new table fea
 
 <section title=" Comparison to ML-KEM" anchor="Comparison">
 
-<t> ML-KEM and FrodoKEM are two well-known post-quantum KEMs based on lattices. More specifically, ML-KEM <xref target="FIPS203"></xref>, originally called Kyber, has been standardized as the only one KEM scheme by NIST in August of 2024. It is a Module-Lattice based Key-Encapsulation Mechanism, so called ML-KEM. </t>
-
-<!-- ML-KEM is also specified as an Internet Draft in IETF <xref target="I-D.Kyber24"></xref>. -->
+<!-- 
+<t>  More specifically, ML-KEM <xref target="FIPS203"></xref>, originally called Kyber, has been standardized as the only one KEM scheme by NIST in August of 2024. It is a Module-Lattice based Key-Encapsulation Mechanism, so called ML-KEM. 
+ML-KEM is also specified as an Internet Draft in IETF <xref target="I-D.Kyber24"></xref>. </t>
+-->
 	    
-<t> However, the performace of FrodoKEM is not as good as ML-KEM. Specifically, as shown in <xref target="table1" />, the sizes of public encapsulation key and ciphtertext of FrodoKEM (Table A.5 in <xref target="FrodoKEM"></xref>) are roughly 13 times larger than those of ML-KEM (Table 3 in <xref target="FIPS203"></xref>). Consequently, this will almost unavoidably trigger IKE fragmentation <xref target="RFC7383"></xref> <xref target="RFC9242"></xref>, when FrodoKEM is used in IKEv2. </t>
+<t> ML-KEM and FrodoKEM are two well-known post-quantum KEMs based on structured and unstructured lattices. The performance of FrodoKEM is not as good as ML-KEM. As shown in <xref target="table1" />, the sizes of public encapsulation key and ciphtertext of FrodoKEM (Table A.5 in <xref target="FrodoKEM"></xref>) are roughly 13 times larger than those of ML-KEM (Table 3 in <xref target="FIPS203"></xref>). Consequently, this will almost unavoidably trigger IKE fragmentation <xref target="RFC7383"></xref> <xref target="RFC9242"></xref>, when FrodoKEM is used in IKEv2 as additional key exchange <xref target="RFC9370"> </xref>. </t>
 
           <table title="Size (in bytes) of keys and ciphertexts of ML-KEM and FrodoKEM" anchor="table1">
             <thead>
