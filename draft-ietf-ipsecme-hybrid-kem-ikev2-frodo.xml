@@ -109,7 +109,7 @@ Have a section that is just examples of what is new in v3 (such as new table fea
     </author>
 
 <date/>
-<!-- On draft subbmission:
+<!-- On draft submission:
          * If only the current year is specified, the current day and month will be used.
          * If the month and year are both specified and are the current ones, the current day will
            be used
@@ -127,17 +127,13 @@ Have a section that is just examples of what is new in v3 (such as new table fea
          use by search engines. -->
 
 <abstract>
-      <!-- RFC 9370 specifies a framework that supports mulitple key encapsulation mechanisms (KEMs) in the Internet Key Exchange Protocol Version 2 (IKEv2) by allowing up to 7 layers of additiona KEMs employed with the oringal ECDH to derive the final shared secret keys for IPsec protocols. The primitive goal is to mitigate the security threat against quantum computers by hybriding additional post-quantum (PQ) KEMs with the orinigal ECDH key exchange. This draft specifies how one QP KEMs, FrodoKEM, is instantiated in the IKEv2 as the additional KEMs with the main ECDH to achieve hybrid key agreement.-->
+      <!-- RFC 9370 specifies a framework that supports multiple key encapsulation mechanisms (KEMs) in the Internet Key Exchange Protocol Version 2 (IKEv2) by allowing up to 7 layers of additional KEMs employed with the oringal ECDH to derive the final shared secret keys for IPsec protocols. The primitive goal is to mitigate the security threat against quantum computers by hybriding additional post-quantum (PQ) KEMs with the orinigal ECDH key exchange. This draft specifies how one QP KEMs, FrodoKEM, is instantiated in the IKEv2 as the additional KEMs with the main ECDH to achieve hybrid key agreement.-->
 	  
 	 <!-- <t> Multiple key exchanges in the Internet Key Exchange Protocol Version 2 (IKEv2) [RFC9370] specifies a framework, which supports multiple key encapsulation mechanisms (KEMs) in IKEv2 by allowing up to 7 layers of additional KEMs to derive the final shared secret keys for IPsec protocols. The primary goal is to mitigate the “harvest now and decrypt later” threat posed by Cryptographically Relevant Quantum Computers(CRQCs). For this purpose, one or more post-quantum KEMs are usually performed in addition to the traditional (EC)DH key exchange. This draft specifies how the post-quantum KEM algorithm FrodoKEM is instantiated for IKEv2 as an additional key exchange mechanism. -->
 
     <t> FrodoKEM is an unstructured lattice based Key Encapsulation Mechanism (KEM). Compared to ML-KEM, 
-    FrodoKEM is considered as having more conservative design.
-    This draft specifies how to use FrodoKEM by itself or as an additional key
-    exchange in IKEv2 along with a traditional key exchange.  These
-    options allow for negotiating IKE and Child SA keys which are safe
-    against a Cryptographically Relevant Quantum Computers (CRQC).
-	</t>
+    FrodoKEM is considered with more conservative security. This draft specifies how to use FrodoKEM by itself or as an additional key
+    exchange in IKEv2 along with a traditional key exchange. These options enable to negotiate IKE and Child SA keys that are safe against a Cryptographically Relevant Quantum Computer (CRQC). </t>
 
 <!--	  <t> [EDNOTE: IANA KE code points for FrodoKEM may need to be assigned, as the code points for ML-KEM has been considered in <xref target="W-D.K25"> </xref>. ] </t> -->
     </abstract>
