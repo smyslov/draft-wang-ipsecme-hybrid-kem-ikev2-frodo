@@ -465,9 +465,9 @@ HDR(IKE_AUTH), SK{ IDi, AUTH, SAi2, TSi, TSr } --->
 
 <t> The security discussions in Section 10 of <xref target="W-D.K25"></xref> apply here as well. First of all, FrodoKEM is designed to be a post-quantum KEM with IND-CCA2 security (Sections 3.1 and 10 in <xref target="W-D.K25"></xref>). Namely, it has indistinguishability under adaptive chosen ciphertext attacks, which means that shared secret values should be indistinguishable from random strings even an active attacker is given the ability to access arbitrary ciphertexts decapsulated. </t>
 	
-<t> Next, generating a new ciphertext for each FrodoKEM key exchange is <bcp14>REQUIRED</bcp14> by this specification. However, it is <bcp14> OPTIONAL</bcp14> for generating a new ephemeral keypair for each FrodoKEM key exchange, as IKEv2 <xref target="RFC73=296"></xref> does not require that the public keys never repeat. Note that when the same FrodoKEM public key is resued to encapsulate multiple shared secrets, forward security may not be guaranteed, as the compromise of the corresponding private decapsulation key may lead to the compromise of shared secrets exchanged in previous sessions under the same encapsulation key. Section 2.12 in <xref target="RFC7296"></xref> gives the reasons for reuse of a public key and discusses the corresponding security implications. </t>
+<t> Next, generating a new ciphertext for each FrodoKEM key exchange is <bcp14>REQUIRED</bcp14> by this specification. However, it is <bcp14> OPTIONAL</bcp14> for generating a new ephemeral keypair for each FrodoKEM key exchange, as IKEv2 <xref target="RFC7296"></xref> does not require that the public keys never repeat. Note that when the same FrodoKEM public key is resued to encapsulate multiple shared secrets, forward security may not be guaranteed, as the compromise of the corresponding private decapsulation key may lead to the compromise of shared secrets exchanged in previous sessions under the same encapsulation key. Section 2.12 in <xref target="RFC7296"></xref> gives the reasons for reuse of a public key and discusses the corresponding security implications. </t>
 	
-<t> Thirdly, independency is <bcp14>REQUIRED</bcp14> among the randomness for generating FrodoKEM encapsulation key, for generating ciphertexts, and other random seeds used in the IKEv2 negotiation. For example, the responders <bcp14>MUST NOT</bcp14> reuse randomness to generate FrodoKEM ciphertexts, and the initiator also <bcp14>MUST NOT</bcp14> use the same seed to generate the FrodoKEM and (EC)DH keypairs in a PQ/T Hybrid key exchange. </t>
+<t> Thirdly, independency is <bcp14>REQUIRED</bcp14> among the randomness for generating FrodoKEM encapsulation key and for generating ciphertexts, and other random seeds used in the IKEv2 negotiation. For example, the responders <bcp14>MUST NOT</bcp14> reuse randomness to generate FrodoKEM ciphertexts, and the initiator also <bcp14>MUST NOT</bcp14> use the same seed to generate the FrodoKEM and (EC)DH keypairs in a PQ/T Hybrid key exchange. </t>
 	
 <t> Finally, downgrade attacks on the authentication part of IKEv2 has been identified and repaired in "Prevention Downgrade Attacks on the Internet Key Exchange Protocol Version 2 (IKEv2)" <xref target="W-D.SP25"></xref>. Due to a flaw without authenticating the whole message received from the other peer, these attacks may allow an active attacker to mislead the two peers to finally negotiating a weak KEM for key exchange. These attacks apply to the IKEv2 <xref target="RFC7296"></xref>, <xref target="RFC9370"></xref>, and all extensions. So, this specification <bcp14>MUST</bcp14> be implemented with the updated authentication mechanism given by <xref target="W-D.SP25"></xref>.</t>
 
@@ -536,7 +536,7 @@ HDR(IKE_AUTH), SK{ IDi, AUTH, SAi2, TSi, TSr } --->
 <section title="Acknowledgments" anchor="acknowledgements">
 
 <t>
-The authors would like to thank Scott Fluhrer, Christopher Patton, and Kev Kitchen for their valuable comments.  
+The authors would like to thank the following experts for their valuable comments: Scott Fluhrer, Christopher Patton, Kev Kitchen, Panos Kampanakis, Paul Wouters, Thom Wiggers, Michael Richardson, John Mattsson, Marc Penninga, Tirumal Reddy, and Jun Hu. 
 </t>
 </section>
 
@@ -622,7 +622,8 @@ The authors would like to thank Scott Fluhrer, Christopher Patton, and Kev Kitch
           <seriesInfo name="Work in Progress, " value="Internet-Draft"/>
         </reference>
 -->	
-	
+
+	<!--
 		<reference anchor="OPM23"  target="">
           <front>
             <title>Where Is the Research on Cryptographic Transition and Agility?</title>
@@ -636,7 +637,7 @@ The authors would like to thank Scott Fluhrer, Christopher Patton, and Kev Kitch
           </front>
           <seriesInfo name="Communications of the ACM, " value="66(4): 29-32"/>
         </reference>
-
+-->
 			  
 			  <reference anchor="I-D.LBES25"  target="https://datatracker.ietf.org/doc/draft-longa-cfrg-frodokem/">
           <front>
@@ -665,6 +666,7 @@ The authors would like to thank Scott Fluhrer, Christopher Patton, and Kev Kitch
           <seriesInfo name="Federal Information Processing Standards Publication" value=""/>
         </reference>
 
+	<!-- 
 	<reference anchor="CD22"  target="https://eprint.iacr.org/2022/975">
           <front>
             <title> An Efficient Key Recovery Attack on SIDH </title>
@@ -675,10 +677,11 @@ The authors would like to thank Scott Fluhrer, Christopher Patton, and Kev Kitch
               <t> .. </t>
             </abstract>
           </front>
-	         <seriesInfo name="Formal version published in the proceddings of EUROCRYPT 2023" value=""/>
+	         <seriesInfo name="Formal version published in the proceedings of EUROCRYPT 2023" value=""/>
 			 </reference>
-			 
-			 <reference anchor="W-D.SP25"  target="https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-downgrade-prevention/">
+		-->	 
+	 
+	  <reference anchor="W-D.SP25"  target="https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-downgrade-prevention/">
           <front>
             <title> Prevention Downgrade Attacks on the Internet Key Exchange Protocol Version 2 (IKEv2) </title>
             <author fullname="V. Smyslov" initials="V. " surname="Smyslov" />
