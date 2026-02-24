@@ -152,7 +152,7 @@ Have a section that is just examples of what is new in v3 (such as new table fea
 
 <section title="Notes of Change">
 
-<t> Changes made in version 04: </t>
+<t> Changes made in version draft-ietf-ipsecme-kem-auth-ikev2-00: </t>
 <ul spacing="normal">
         <li> New co-author is added.</li>
         <li> Clarifications are added that FrodoKEM can be used either as an additional key exchange method, or as the only key exchange method for IKE SA 
@@ -161,14 +161,14 @@ Have a section that is just examples of what is new in v3 (such as new table fea
         <li> Minor changes throughout the document.</li>
         </ul>
 
-<t> Changes made in version 03: </t>
+<t> Changes made in version draft-wang-ipsecme-kem-auth-ikev2-03: </t>
 <ul spacing="normal">
         <li> This specification has switched 4 variants of eFrodoKEM (ephemeral mode) to those of FrodoKEM (standard mode). The reasons are given in <xref target="Frodo"></xref>. </li>
         <li> Other Sections are updated correspondingly. </li>
         </ul>
 
 
-<t> Three main changes have been made in version 02, as a response to comments received since July of 2025. </t>
+<t> Three main changes have been made in version draft-wang-ipsecme-kem-auth-ikev2-02, as a response to comments received since July of 2025. </t>
 
 <ul spacing="normal">
         <li> Reduced code points from 6 in v01 to 4 now (revised Sections 3.3 and 6). </li>
@@ -176,7 +176,7 @@ Have a section that is just examples of what is new in v3 (such as new table fea
 		<li> Added KEi and KEr payloads for using FrodoKEM in IKEv2 (added new Sections 4.3). </li>
         </ul>
 
-<t> Two main changes have been made in version 01, as a response to comments received at 122 meeting: </t>
+<t> Two main changes have been made in version draft-wang-ipsecme-kem-auth-ikev2-01, as a response to comments received at 122 meeting: </t>
 
 <ul spacing="normal">
         <li> Restructured the draft. </li>
