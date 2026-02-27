@@ -555,7 +555,7 @@ The authors would like to thank the following experts for their valuable comment
 		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9242.xml"/>
 		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9370.xml"/>
 		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8784.xml"/>
-		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9876.xml"/>
+		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9867.xml"/>
 		<reference anchor="IANA-IKEv2" target="https://www.iana.org/assignments/ikev2-parameters/ikev2-parameters.xhtml">
           <front>
             <title> Internet Key Exchange Version 2 (IKEv2) Parameters </title>
