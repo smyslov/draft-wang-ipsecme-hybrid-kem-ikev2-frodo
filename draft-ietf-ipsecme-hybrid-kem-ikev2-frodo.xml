@@ -388,7 +388,9 @@ HDR(IKE_AUTH), SK{ IDi, AUTH, SAi2, TSi, TSr } --->
 
 
 <t> After the completion of both IKE_INTERMEDIATE exchanges for TBD38 and 36, the initiator and the responder will continue the IKE_AUTH exchange phase. </t>
-	</section>
+
+<t> Note that similar to the above example running FrodoKEM in IKE_INTERMEDIATE with ECDH as a traditional key exchange, FrodoKEM can also be executed in IKE_INTERMEDIATE as an additional (PQ) KEM with a Post-quantum Preshared Keys (PPK) as a traditional key exchange. In this case, the traditional exchange part with PPK <bcp14>SHOULD</bcp14> be implemented as specified by <xref target="RFC8784"/> or <xref target="RFC9867"/>. </t>
+</section>
 	
 <section title="FrodoKEM in IKE_FOLLOWUP_KE" anchor="IKE_FOLLOWUP_KE">
 
@@ -552,6 +554,8 @@ The authors would like to thank the following experts for their valuable comment
 		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.7383.xml"/>
 		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9242.xml"/>
 		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9370.xml"/>
+		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8784.xml"/>
+		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9876.xml"/>
 		<reference anchor="IANA-IKEv2" target="https://www.iana.org/assignments/ikev2-parameters/ikev2-parameters.xhtml">
           <front>
             <title> Internet Key Exchange Version 2 (IKEv2) Parameters </title>
