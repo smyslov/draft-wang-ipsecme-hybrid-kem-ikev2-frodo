@@ -564,6 +564,34 @@ The authors would like to thank the following experts for their valuable comment
           <seriesInfo name="the Internet Assigned Numbers Authority (IANA)." value=""/>
         </reference>
 
+			  
+			  <reference anchor="I-D.LBES25"  target="https://datatracker.ietf.org/doc/draft-longa-cfrg-frodokem/">
+          <front>
+            <title>FrodoKEM: key encapsulation from learning with errors</title>
+            <author fullname="P. Longa" initials="P." surname="Longa"/>
+            <author fullname="J. W. Bos" initials="J. W." surname="Bos"/>
+			<author fullname="S. Ehlen" initials="S." surname="Ehlen"/>
+            <author fullname="D. Stebila" initials="D. " surname="Stebila"/>
+            <date month="september" year="2025"/>
+            <abstract>
+              <t> .. </t>
+            </abstract>
+          </front>
+          <seriesInfo name="Work in Progress, " value="WG Document"/>
+        </reference>
+		
+        <!-- The recommended and simplest way to include a well known reference -->
+ 
+</references>
+
+<references>
+        <name>Informative References</name>
+		
+		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9794.xml"/>
+        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9329.xml"/>
+        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ipsecme-ikev2-reliable-transport.xml"/>
+
+	
 <reference anchor="FrodoKEM"  target="https://frodokem.org/files/FrodoKEM_standard_proposal_20241205.pdf">
           <front>
             <title>FrodoKEM: Learning With Errors Key Encapsulation</title>
@@ -584,18 +612,7 @@ The authors would like to thank the following experts for their valuable comment
           </front>
           <seriesInfo name="Preliminary Standardization Proposal submitted to ISO" value=""/>
         </reference>
-		
-        <!-- The recommended and simplest way to include a well known reference -->
- 
-</references>
 
-<references>
-        <name>Informative References</name>
-		
-		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9794.xml"/>
-        <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9329.xml"/>
-        <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ipsecme-ikev2-reliable-transport.xml"/>
-		
 		<reference anchor="W-D.K25"  target="https://datatracker.ietf.org/doc/draft-ietf-ipsecme-ikev2-mlkem/">
           <front>
             <title>Post-quantum Hybrid Key Exchange with ML-KEM in the Internet Key Exchange Protocol Version 2 (IKEv2)</title>
@@ -638,7 +655,8 @@ The authors would like to thank the following experts for their valuable comment
           <seriesInfo name="Communications of the ACM, " value="66(4): 29-32"/>
         </reference>
 -->
-			  
+
+		<!--
 			  <reference anchor="I-D.LBES25"  target="https://datatracker.ietf.org/doc/draft-longa-cfrg-frodokem/">
           <front>
             <title>FrodoKEM: key encapsulation from learning with errors</title>
@@ -653,7 +671,8 @@ The authors would like to thank the following experts for their valuable comment
           </front>
           <seriesInfo name="Work in Progress, " value="WG Document"/>
         </reference>
-		
+	-->
+	
 	<reference anchor="FIPS203"  target="https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.203.pdf">
           <front>
             <title>FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism Standard </title>
