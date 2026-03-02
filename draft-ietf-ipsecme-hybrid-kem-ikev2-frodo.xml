@@ -155,12 +155,11 @@ Have a section that is just examples of what is new in v3 (such as new table fea
 <t> Changes made in version draft-ietf-ipsecme-kem-auth-ikev2-00: </t>
 <ul spacing="normal">
         <li> New co-author is added.</li>
-        <li> Clarifications are added that FrodoKEM can be used either as an additional key exchange method, or as the only key exchange method for IKE SA 
-        (provided there is no transport issues). </li>
+        <li> Clarifications are added that FrodoKEM can be used either as an additional key exchange method, or as the only key exchange method for IKE SA (provided there is no transport issues). </li>
         <li> References are re-arranged and updated.</li>
-	    <li> Gihub address of this document added: https://github.com/smyslov/draft-wang-ipsecme-hybrid-kem-ikev2-frodo/.</li>
+	    <li> Github address of this document added: https://github.com/smyslov/draft-wang-ipsecme-hybrid-kem-ikev2-frodo/.</li>
         <li> Editorial changes throughout the document: Shorten Introduction, aligned Security Discussions with <xref target="W-D.K25"></xref>, ....</li>
-        </ul>
+        </ul> 
 
 <t> Changes made in version draft-wang-ipsecme-kem-auth-ikev2-03: </t>
 <ul spacing="normal">
@@ -329,7 +328,7 @@ ML-KEM is also specified as an Internet Draft in IETF <xref target="I-D.Kyber24"
 
 <section title="Recipient Tests" anchor="Test">
 	
-<t> Different from <xref target="FIPS203"></reef>, there is no input validation for FrodoKEM public keys or ciphertexts <xref target="I-D.LBES25"></reef> <xref target="FrodoKEM"></reef>. Therefore, the recipient tests are not required for using FrodoKEM in IKEv2. </t>
+<t> Different from <xref target="FIPS203"></xref>, there is no input validation for FrodoKEM public keys or ciphertexts <xref target="I-D.LBES25"></xref> <xref target="FrodoKEM"></xref>. Therefore, the recipient tests are not required for using FrodoKEM in IKEv2. </t>
 </section>
 
 	
