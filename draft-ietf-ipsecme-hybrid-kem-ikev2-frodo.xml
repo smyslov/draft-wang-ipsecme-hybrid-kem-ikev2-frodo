@@ -329,7 +329,7 @@ ML-KEM is also specified as an Internet Draft in IETF <xref target="I-D.Kyber24"
 
 <section title="Recipient Tests" anchor="Test">
 	
-Different from <xref target="FIPS203"></reef>, there is no input validation for FrodoKEM public keys or ciphertexts <xref target="I-D.LBES25"></reef> <xref target="FrodoKEM"></reef>. Therefore, the recipient tests are not required for using FrodoKEM in IKEv2.  
+<t> Different from <xref target="FIPS203"></reef>, there is no input validation for FrodoKEM public keys or ciphertexts <xref target="I-D.LBES25"></reef> <xref target="FrodoKEM"></reef>. Therefore, the recipient tests are not required for using FrodoKEM in IKEv2. </t>
 </section>
 
 	
