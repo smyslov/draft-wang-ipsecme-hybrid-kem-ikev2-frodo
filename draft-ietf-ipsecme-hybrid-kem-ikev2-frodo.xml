@@ -324,8 +324,15 @@ ML-KEM is also specified as an Internet Draft in IETF <xref target="I-D.Kyber24"
 </section>
 </section>
 
+	
 <section title=" FrodoKEM in IKEv2" anchor="Main">
 
+<section title="Recipient Tests" anchor="Test">
+	
+Different from <xref target="FIPS203"></reef>, there is no input validation for FrodoKEM public keys or ciphertexts <xref target="I-D.LBES25"></reef> <xref target="FrodoKEM"></reef>. Therefore, the recipient tests are not required for using FrodoKEM in IKEv2.  
+</section>
+
+	
 <section title=" FrodoKEM in IKE_INTERMEDIATE" anchor="INTERMEDIATE">
 
 <t> As specified in <xref target="RFC9370"></xref>, to run PQ KEMs in IEKv2, the initiator and the responder run traditional key exchange first and then PQ KEMs. This is because the size of PQ KEM public key or the ciphertext is normally large, such that the first exchange in IKEv2 cannot accommodate them (together with other necessary information) without exceeding MTU (Maximum Transmission Unit), which is generally set as 1500 bytes. </t>
@@ -507,21 +514,21 @@ HDR(IKE_AUTH), SK{ IDi, AUTH, SAi2, TSi, TSr } --->
         <th>TBD38</th>
         <th>FrodoKEM-976-&lt;AES&gt;</th>
         <th></th>
-        <th>[TBD, this draft]</th>
+        <th>[TBD, this draft, Section 5.1]</th>
         <th>[TBD, this draft]</th>
     </tr>
     <tr>
         <th>TBD39</th>
         <th>FrodoKEM-976-&lt;SHAKE&gt;</th>
         <th></th>
-        <th>[TBD, this draft]</th>
+        <th>[TBD, this draft, Section 5.1]</th>
         <th>[TBD, this draft]</th>
     </tr>
     <tr>
         <th>TBD40</th>
         <th>FrodoKEM-1344-&lt;AES&gt;</th>
         <th></th>
-        <th>[TBD, this draft]</th>
+        <th>[TBD, this draft, Section 5.1]</th>
         <th>[TBD, this draft]</th>
     </tr>
     <tr>
