@@ -157,7 +157,8 @@ Have a section that is just examples of what is new in v3 (such as new table fea
         <li> New co-author is added.</li>
         <li> Clarifications are added that FrodoKEM can be used either as an additional key exchange method, or as the only key exchange method for IKE SA 
         (provided there is no transport issues). </li>
-        <li> References are re-arranged.</li>
+        <li> References are re-arranged and updated.</li>
+	    <li> Gihub address of this document added: https://github.com/smyslov/draft-wang-ipsecme-hybrid-kem-ikev2-frodo/.</li>
         <li> Editorial changes throughout the document: Shorten Introduction, aligned Security Discussions with <xref target="W-D.K25"></xref>, ....</li>
         </ul>
 
@@ -210,7 +211,8 @@ Have a section that is just examples of what is new in v3 (such as new table fea
 	  
 	  	<t> However, the performance of FrodoKEM is not as good as ML-KEM. In particular, the sizes of pulic key and ciphtertext of FrodoKEM are roughly 13 times larger than those of ML-KEM. Consequently, this will almost unavoidably trigger IKE fragmentation. </t>
 -->
-	
+
+	EDITOR NOTE: This document is being developed at https://github.com/smyslov/draft-wang-ipsecme-hybrid-kem-ikev2-frodo/
 </section>
 
 <section>
@@ -596,7 +598,7 @@ The authors would like to thank the following experts for their valuable comment
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ipsecme-ikev2-reliable-transport.xml"/>
 
 	
-<reference anchor="FrodoKEM"  target="https://frodokem.org/files/FrodoKEM_standard_proposal_20241205.pdf">
+<reference anchor="FrodoKEM"  target="https://frodokem.org/files/FrodoKEM_standard_proposal_20250929.pdf">
           <front>
             <title>FrodoKEM: Learning With Errors Key Encapsulation</title>
             <author fullname="E. Alkim" initials="E." surname="Alkim"/>
