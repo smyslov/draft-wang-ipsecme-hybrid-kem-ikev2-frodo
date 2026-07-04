@@ -155,7 +155,7 @@ Have a section that is just examples of what is new in v3 (such as new table fea
 <t> Changes made in version draft-ietf-ipsecme-kem-auth-ikev2-01: </t>
 <ul spacing="normal">
     <li> Updatd the title and references. </li>
-	<li> Updated 4.2 to alisgn with ISO new standard. </li>
+	<li> Updated 4.2 to align with ISO new standard. </li>
 	<li> Editorial issues. </li>
         </ul> 
 	
@@ -571,6 +571,8 @@ The authors would like to thank the following experts for their valuable comment
 		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.8784.xml"/>
 		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9867.xml"/>
 		<reference anchor="IANA-IKEv2" target="https://www.iana.org/assignments/ikev2-parameters/ikev2-parameters.xhtml">
+		<xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ipsecme-ikev2-downgrade-prevention.xml"/>
+
           <front>
             <title> Internet Key Exchange Version 2 (IKEv2) Parameters </title>
             <author fullname=" " initials=" " surname=" "/>	 
@@ -605,10 +607,8 @@ The authors would like to thank the following experts for their valuable comment
 		<xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9794.xml"/>
         <xi:include href="https://bib.ietf.org/public/rfc/bibxml/reference.RFC.9329.xml"/>
         <xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ipsecme-ikev2-reliable-transport.xml"/>
-     
 	<xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ipsecme-ikev2-mlkem.xml"/>
-	<xi:include href="https://xml2rfc.tools.ietf.org/public/rfc/bibxml3/reference.I-D.ietf-ipsecme-ikev2-downgrade-prevention.xml"/>
-
+	
 	<reference anchor="I-D.draft-longa-cfrg-frodokem"  target="https://datatracker.ietf.org/doc/draft-longa-cfrg-frodokem/">
           <front>
             <title>FrodoKEM: key encapsulation from learning with errors</title>
